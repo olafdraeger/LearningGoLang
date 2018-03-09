@@ -6,19 +6,22 @@ import (
 	"time"
 )
 
-var count int = 0
+//var count int = 0
 func main() {
+	start := time.Now()
 	for x := 0; x < 10000 ;x++  {
 		c := gen()
 		for n := range c {
-			fmt.Println(n)
+			//fmt.Println(n)
 			for m := range (factorial(n)) {
-				count++
-				fmt.Println("Run: ", count)
-				fmt.Println(m)
+				//count++
+				//fmt.Println("Run No: ", count)
+				fmt.Println("Factorial of: ", n, "is: ",m)
 			}
 		}
 	}
+	fmt.Println( "Factorial running time: ",time.Since(start))
+
 }
 
 func gen() chan int {
@@ -27,7 +30,7 @@ func gen() chan int {
 		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 		for i := 1; i <= 100; i++ {
 
-			out <- r.Intn(23)
+			out <- r.Intn(20)
 		}
 		close(out)
 	}()

@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 func main() {
 
+	start := time.Now()
 	in := gen()
 
 	c0 := factorial(in)
@@ -26,6 +28,8 @@ func main() {
 		fmt.Printf("%d", count)
 		fmt.Println("\t", n)
 	}
+	elapsed := time.Since(start)
+	fmt.Println(count, " factorial calculations took ", elapsed, " time to run")
 }
 
 func gen() <-chan int {

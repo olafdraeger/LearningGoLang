@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-//var count int = 0
+var count int = 0
 func main() {
 	start := time.Now()
 	for x := 0; x < 10000 ;x++  {
@@ -14,13 +14,14 @@ func main() {
 		for n := range c {
 			//fmt.Println(n)
 			for m := range (factorial(n)) {
-				//count++
+				count++
 				//fmt.Println("Run No: ", count)
 				fmt.Println("Factorial of: ", n, "is: ",m)
 			}
 		}
 	}
-	fmt.Println( "Factorial running time: ",time.Since(start))
+
+	fmt.Println( "Factorials calculated: ", count," / running time: ",time.Since(start))
 
 }
 

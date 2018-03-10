@@ -1,10 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+	"math/rand"
+)
 
 func main() {
-	f := factorial(20)
+	var f, count int
+	start := time.Now()
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 1; i <= 1000000; i++ {
+		count++
+	f := factorial(r.Intn(20))
 	fmt.Println(f)
+	}
+	fmt.Println(f)
+	elapsed := time.Since(start)
+	fmt.Println("factorial runs ", count," / time :", elapsed)
 }
 
 func factorial(n int) int {

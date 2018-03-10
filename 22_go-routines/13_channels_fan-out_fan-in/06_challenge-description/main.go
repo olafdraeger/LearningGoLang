@@ -22,11 +22,12 @@ func main() {
 	c8 := factorial(in)
 	c9 := factorial(in)
 
-	var count int
+	var count, d int
 	for n := range merge(c0, c1, c2, c3, c4, c5, c6, c7, c8, c9) {
 		count++
-		fmt.Printf("%d", count)
-		fmt.Println("\t", n)
+		d += n
+		//fmt.Printf("%d", count)
+		//fmt.Println("\t", n)
 	}
 	elapsed := time.Since(start)
 	fmt.Println(count, " factorial calculations took ", elapsed, " time to run")
@@ -35,7 +36,7 @@ func main() {
 func gen() <-chan int {
 	out := make(chan int)
 	go func() {
-		for i := 0; i < 100000; i++ {
+		for i := 0; i < 1000000; i++ {
 			for j := 3; j < 13; j++ {
 				out <- j
 			}

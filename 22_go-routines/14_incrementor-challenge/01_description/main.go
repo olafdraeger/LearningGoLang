@@ -2,62 +2,39 @@ package main
 
 import (
 	"fmt"
-	//"sync"
-	//"sync/atomic"
-	"sync"
-	//"reflect"
+	"strconv"
 )
 
-var count int
-//var wg sync.WaitGroup
-
 func main() {
-	//wg.Add(2)
-	ch1 := make(chan int)
-	ch2 := make(chan int)
-	go incrementor("1", ch1)
-	go incrementor("2", ch2)
-	//wg.Wait()
-	ch := merge(ch1, ch2)
-	for n := range ch {
-		count += n
+	c := incrementor(800)
+
+	var count int
+	for s := range c {
+		count++
+		fmt.Println(s)
 	}
-	fmt.Println("Final Counter:", count)
+	fmt.Println("Final Count: ", count)
 }
 
-func incrementor(s string, ch chan int) {
-	for i := 0; i < 20; i++ {
-		//atomic.AddInt64(&count, 1)
-		ch <- 1
-		fmt.Println("Process: "+s+" printing:", i)
-	}
-	close(ch)
-	//wg.Done()
-}
-
-func merge(cs ...chan int) <- chan int {
-	var wg sync.WaitGroup
-	out := make(chan int)
-
-	output := func(c <- chan int) {
-		for n := range c {
-			out <- n
-		}
-		wg.Done()
-	}
-
-	wg.Add(len(cs))
-
-	// range spits our two values, index and chan
-	for _, ch := range cs {
-		go output(ch)
+func incrementor(n int) <- chan string{
+	outC := make(chan string)
+	doneB := make(chan bool)
+	for i := 0; i < n; i++ {
+		go func(i int) {
+			for x := 0; x < 20; x++ {
+				outC <- fmt.Sprint("Process: " + strconv.Itoa(i) + " printing: ", x)
+			}
+		doneB <- true
+		}(i)
 	}
 
 	go func() {
-		wg.Wait()
-		close(out)
+		for i := 0; i < n; i++ {
+			<- doneB
+		}
+		close(outC)
 	}()
-	return out
+	return outC
 }
 
 /*

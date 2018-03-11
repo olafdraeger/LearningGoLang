@@ -26,7 +26,7 @@ func main() {
 func gen() <-chan int {
 	out := make(chan int)
 	go func() {
-		for i := 0; i < 10; i++ {
+		for i := 0; i < 100; i++ {
 			for j := 3; j < 13; j++ {
 				out <- j
 			}
@@ -37,7 +37,7 @@ func gen() <-chan int {
 }
 
 func fanOut(in <-chan int, n int) []<-chan int {
-	xc := make([]<-chan int, n)
+	xc := make([]<-chan int, 0)
 	for i := 0; i < n; i++ {
 		xc = append(xc, factorial(in))
 	}
